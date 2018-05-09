@@ -14,7 +14,7 @@ services:
       - db_data:/var/lib/mysql
   scrap:
     build: .
-    command: python3 manage.py runserver 0.0.0.0:8000
+    command: python3 manage.py runsslserver 0.0.0.0:8000 --certificate /code/SSLcertificate.crt --key /code/SSLprivatekey.key
     volumes:
       - .:/code
     ports:

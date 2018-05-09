@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django_mysql',
     'scraper_app',
     'django_extensions',
-    'corsheaders'
+    'corsheaders',
+    'sslserver'
 ]
 
 SHELL_PLUS_PRE_IMPORTS = [
