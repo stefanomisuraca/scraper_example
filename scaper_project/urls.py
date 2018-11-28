@@ -23,5 +23,5 @@ from scraper_app.views import (
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'scraper/', AnimeScraper.as_view()),
-    url(r'', Health.as_view())
+    url(r'health/', Health.as_view())
 ]

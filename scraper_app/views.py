@@ -1,15 +1,13 @@
-from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse #noqa
 from django.views import View
 from .scraper_class import ScraperModule
-import urllib
-import requests
-import sys
 
 
 class AnimeScraper(View):
+    """Endpoint view."""
 
     def get(self, request):
+        """GET method."""
         anime_link = request.GET.get('anime_link')
         print(anime_link)
         url = anime_link
@@ -19,6 +17,8 @@ class AnimeScraper(View):
 
 
 class Health(View):
+    """Test method."""
 
     def get(self, request):
+        """GET Method."""
         return JsonResponse({"status": "200 OK"})

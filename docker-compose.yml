@@ -1,25 +1,26 @@
 version: '3'
 
 services:
-  db:
-    image: mysql:5.7
-    environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: scrap
-      MYSQL_USER: stefano
-      MYSQL_PASSWORD: asparino
-    ports:
-      - "3306:3306"
-    volumes:
-      - db_data:/var/lib/mysql
+  # db:
+  #   image: mysql:5.7
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: password
+  #     MYSQL_DATABASE: scrap
+  #     MYSQL_USER: stefano
+  #     MYSQL_PASSWORD: asparino
+  #   ports:
+  #     - "3306:3306"
+  #   volumes:
+  #     - db_data:/var/lib/mysql
   scrap:
     build: .
-    command: python3 manage.py runsslserver 0.0.0.0:8000 --certificate /code/SSLcertificate.crt --key /code/SSLprivatekey.key
+    # command: python3 manage.py runsslserver 0.0.0.0:8007 --certificate /code/SSLcertificate.crt --key /code/SSLprivatekey.key
+    command: python3 manage.py runserver 0.0.0.0:8007
     volumes:
       - .:/code
     ports:
-      - "8000:8000"
-    depends_on:
-      - db
-volumes:
-  db_data:
+      - "8007:8007"
+    # depends_on:
+    #   - db
+# volumes:
+#   db_data:
