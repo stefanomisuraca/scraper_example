@@ -1,3 +1,4 @@
 SSLcertificate.crt
 SSLIntermediateCertificate.crt
 SSLprivatekey.key
+__pycache__

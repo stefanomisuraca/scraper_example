@@ -1,9 +1,8 @@
 beautifulsoup4
 django-cors-headers
 django-extensions
-django-mysql==2.1.1
 django-sslserver
-Django>=1.8,<2.0
+Django
 html5lib
 lxml
 mysqlclient
