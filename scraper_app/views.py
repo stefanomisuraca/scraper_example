@@ -9,9 +9,11 @@ class AnimeScraper(View):
     def get(self, request):
         """GET method."""
         anime_link = request.GET.get('anime_link')
+        host = request.GET.get('host')
         print(anime_link)
+        print(host)
         url = anime_link
-        scraper = ScraperModule(url)
+        scraper = ScraperModule(url, host)
         result = scraper.get_episodes()
         return JsonResponse(result, safe=False)
 

@@ -6,9 +6,15 @@ import re
 class ScraperModule(object):
     """Scraper class."""
 
-    def __init__(self, url):
+    host_urls = {
+        "openload": "https://openload.co",
+        "streamango": "https://streamango.com"
+    }
+
+    def __init__(self, url, host="openload"):
         """Initialize the object with this method."""
         self.url = url
+        self.host = host
         self.html_parser = "html.parser"
         self.lxml_parser = "lxml"
         if self.url is None:
@@ -20,7 +26,7 @@ class ScraperModule(object):
         else:
             return None
         page_container = self.soup.find('div', class_=re.compile(
-            'pagination clearfix')
+            'entry-content clearfix')
         ).find_all('a', href=True)
         self.pages = [uri['href'] for uri in page_container]
         self.pages.insert(0, self.url)
@@ -39,6 +45,7 @@ class ScraperModule(object):
             return
         if host:
             a_tags = self.soup.find_all('a', href=re.compile(host))
+            print(a_tags)
         else:
             a_tags = self.soup.find_all('a')
         return [uri['href'] for uri in a_tags]
@@ -49,8 +56,10 @@ class ScraperModule(object):
         pages = self.get_pages()
         for page in pages:
             try:
-                links = self.get_links(page, host="https://openload.co")
-                # links = self.get_links(page, host="https://streamango.com")
+                links = self.get_links(
+                    page,
+                    host=self.host_urls.get(self.host)
+                )
                 if links is None:
                     continue
             except ValueError as e:
