@@ -8,7 +8,9 @@ class ScraperModule(object):
 
     host_urls = {
         "openload": "https://openload.co",
-        "streamango": "https://streamango.com"
+        "streamango": "https://streamango.com",
+        "verystream": "https://verystream.com",
+        "oload": "https://oload.website"
     }
 
     def __init__(self, url, host="openload"):
@@ -25,10 +27,9 @@ class ScraperModule(object):
             self.soup = BeautifulSoup(self.content, self.lxml_parser)
         else:
             return None
-        page_container = self.soup.find('div', class_=re.compile(
-            'entry-content clearfix')
-        ).find_all('a', href=True)
-        self.pages = [uri['href'] for uri in page_container]
+        self.pages = [uri["href"] for uri in self.soup.find_all(
+            'a', class_="post-page-numbers"
+        )]
         self.pages.insert(0, self.url)
 
     def get_pages(self):
@@ -44,17 +45,18 @@ class ScraperModule(object):
         else:
             return
         if host:
-            a_tags = self.soup.find_all('a', href=re.compile(host))
-            print(a_tags)
+            iframe_tags = self.soup.find_all('iframe', src=re.compile(host))
+            print(iframe_tags)
         else:
-            a_tags = self.soup.find_all('a')
-        return [uri['href'] for uri in a_tags]
+            iframe_tags = self.soup.find_all('iframe')
+        return [uri['src'] for uri in iframe_tags]
 
     def get_episodes(self):
         """Loop pages and return episodes link."""
         episodes = []
         pages = self.get_pages()
         for page in pages:
+            print(page)
             try:
                 links = self.get_links(
                     page,

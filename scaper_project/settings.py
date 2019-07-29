@@ -77,10 +77,6 @@ TEMPLATES = [
     },
 ]
 
-CORS_ORIGIN_WHITELIST = (
-    'localhost:8080',
-)
-
 WSGI_APPLICATION = 'scaper_project.wsgi.application'
 
 
