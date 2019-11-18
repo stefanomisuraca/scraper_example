@@ -1,4 +1,6 @@
 from bs4 import BeautifulSoup #noqa
+from django.core.validators import URLValidator
+from django.core.exceptions import ValidationError
 import requests
 import re
 
@@ -10,10 +12,12 @@ class ScraperModule(object):
         "openload": "https://openload.co",
         "streamango": "https://streamango.com",
         "verystream": "https://verystream.com",
-        "oload": "https://oload.website"
+        "oload": "https://oload.website",
+        "mixdrop": "mixdrop.co",
+        "onlystream": "https://onlystream.tv/"
     }
 
-    def __init__(self, url, host="openload"):
+    def __init__(self, url, host="mixdrop"):
         """Initialize the object with this method."""
         self.url = url
         self.host = host
@@ -45,16 +49,16 @@ class ScraperModule(object):
         else:
             return
         if host:
-            iframe_tags = self.soup.find_all('iframe', src=re.compile(host))
-            print(iframe_tags)
+            iframe_tags = self.soup.find_all('a', href=re.compile(host))
         else:
-            iframe_tags = self.soup.find_all('iframe')
-        return [uri['src'] for uri in iframe_tags]
+            iframe_tags = self.soup.find_all('a')
+        return [uri['href'] for uri in iframe_tags]
 
     def get_episodes(self):
         """Loop pages and return episodes link."""
         episodes = []
         pages = self.get_pages()
+        validator = URLValidator()
         for page in pages:
             print(page)
             try:
@@ -68,6 +72,11 @@ class ScraperModule(object):
                 print("Error - %s" % e)
                 continue
             for link in links:
-                episodes.append(link)
+                try:
+                    validator(link)
+                    episodes.append(link)
+                except ValidationError:
+                    fixed_link = re.sub('^:?//|http?s?://', 'https://', link)
+                    episodes.append(fixed_link)
 
         return episodes
