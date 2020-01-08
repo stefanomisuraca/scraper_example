@@ -2,3 +2,4 @@ SSLcertificate.crt
 SSLIntermediateCertificate.crt
 SSLprivatekey.key
 __pycache__
+.DS_Store

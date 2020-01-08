@@ -14,7 +14,8 @@ class ScraperModule(object):
         "verystream": "https://verystream.com",
         "oload": "https://oload.website",
         "mixdrop": "mixdrop.co",
-        "onlystream": "https://onlystream.tv/"
+        "onlystream": "https://onlystream.tv/",
+        "cdn": "https://animepertutticdn.com"
     }
 
     def __init__(self, url, host="mixdrop"):
