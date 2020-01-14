@@ -75,9 +75,9 @@ class ScraperModule(object):
             for link in links:
                 try:
                     validator(link)
-                    episodes.append(link)
+                    episodes.append(link.strip())
                 except ValidationError:
                     fixed_link = re.sub('^:?//|http?s?://', 'https://', link)
-                    episodes.append(fixed_link)
+                    episodes.append(fixed_link.strip())
 
         return episodes
